@@ -6,6 +6,7 @@ utils.swiftmodule: utils.swift
 
 day%: utils.swiftmodule
 	$(SC) -I. -L. -lutils $(SRC)/$@.swift
+	./$@
 
 clean:
 	rm -f *.swiftdoc *.swiftsourceinfo *.swiftmodule *.dylib day*
