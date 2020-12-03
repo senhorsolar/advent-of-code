@@ -88,3 +88,13 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+
+# Some extras that weren't included in the template
+*.swiftdoc
+*.swiftmodule
+*.swiftsourceinfo
+*.dylib
+day*
+!src/*
+!data/*
