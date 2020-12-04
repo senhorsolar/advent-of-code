@@ -5,9 +5,13 @@ public func getFilename(day: Int, directory: String = "data") -> String {
     return filename
 }
 
+public func getFile(_ filename: String) -> String {
+    return try! String(contentsOfFile: filename)
+}
+
 // Loads lines from a given filename
 public func getLines(from filename: String) -> Array<String> {
-    return try! String(contentsOfFile: filename).split(separator: "\n").map {String($0)}
+    return getFile(filename).split(separator: "\n").map {String($0)}
 }
 
 // Function for extracting groups from regex pattern
