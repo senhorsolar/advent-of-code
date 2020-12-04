@@ -26,49 +26,26 @@ func parseKeyVals(_ cand: String) -> [String: String] {
 let necessaryKeys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 
 func part1(_ cand: String) -> Bool {
-
     let keyVals = parseKeyVals(cand)
-
-    for key in necessaryKeys {
-        if keyVals[key] == nil {
-            return false
-        }
-    }
-    
-    return true
+    return (necessaryKeys.map {keyVals[$0] != nil}).allSatisfy({$0})
 }
 
 // Part 2
 // Check if valid passport
 
 func byrRule(byr: String) -> Bool {
-    if byr.count != 4 {
-        return false
-    }
-
     let byrInt = Int(byr) ?? 0
-
-    return (byrInt >= 1920) && (byrInt <= 2002)
+    return (byr.count == 4) && (byrInt >= 1920) && (byrInt <= 2002)
 }
 
 func iyrRule(iyr: String) -> Bool {
-    if iyr.count != 4 {
-        return false
-    }
-
     let iyrInt = Int(iyr) ?? 0
-
-    return (iyrInt >= 2010) && (iyrInt <= 2020)
+    return (iyr.count == 4) && (iyrInt >= 2010) && (iyrInt <= 2020)
 }
 
 func eyrRule(eyr: String) -> Bool {
-    if eyr.count != 4 {
-        return false
-    }
-
     let eyrInt = Int(eyr) ?? 0
-
-    return (eyrInt >= 2020) && (eyrInt <= 2030)
+    return (eyr.count == 4) && (eyrInt >= 2020) && (eyrInt <= 2030)
 }
 
 func hgtRule(hgt: String) -> Bool {
@@ -91,50 +68,25 @@ func hgtRule(hgt: String) -> Bool {
             break
         }
     }
-    
     return false
 }
 
 func hclRule(hcl: String) -> Bool {
-
     let pattern = "#[0-9a-f]{6}"
-
     let matches = hcl.groups(for: pattern)
-
-    if matches.count > 0 {
-        return true
-    }
-    else {
-        return false
-    }
+    return matches.count > 0
 }
 
 func eclRule(ecl: String) -> Bool {
-
     let pattern = "^(amb|blu|brn|gry|grn|hzl|oth)$"
-
     let matches = ecl.groups(for: pattern)
-
-    if matches.count > 0 {
-        return true
-    }
-    else {
-        return false
-    }
+    return matches.count > 0 
 }
 
 func pidRule(pid: String) -> Bool {
-
     let pattern = "^[0-9]{9}$"
-
     let matches = pid.groups(for: pattern)
-
-    if matches.count > 0 {
-        return true
-    }
-    else {
-        return false
-    }
+    return matches.count > 0
 }
 
 var keyRuleMap = [
@@ -161,7 +113,6 @@ func part2(_ cand: String) -> Bool {
         else {
             return false
         }
-        //keyRuleMap[String($0)](keyVals[String($0)])
     }
 
     return fieldChecks.allSatisfy({$0})
