@@ -2,12 +2,7 @@ import Foundation
 import utils
 
 
-// Check if passport candidate is valid
-let necessaryKeys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
-
 func parseKeyVals(_ cand: String) -> [String: String] {
-
-    
     
     var keyVals: [String: String] = [:]
 
@@ -24,7 +19,14 @@ func parseKeyVals(_ cand: String) -> [String: String] {
 
     return keyVals
 }
+
+// Part 1
+// Check if passport
+
+let necessaryKeys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
+
 func part1(_ cand: String) -> Bool {
+
     let keyVals = parseKeyVals(cand)
 
     for key in necessaryKeys {
@@ -36,7 +38,8 @@ func part1(_ cand: String) -> Bool {
     return true
 }
 
-// Part 2 - a number of rules
+// Part 2
+// Check if valid passport
 
 func byrRule(byr: String) -> Bool {
     if byr.count != 4 {
@@ -134,17 +137,15 @@ func pidRule(pid: String) -> Bool {
     }
 }
 
-// ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
-//typealias ruleFunc = (String) -> Bool
-
-var keyRuleMap: [String: (String)->Bool] = [String: (String)->Bool]()
-keyRuleMap["byr"] = byrRule
-keyRuleMap["iyr"] = iyrRule
-keyRuleMap["eyr"] = eyrRule
-keyRuleMap["hgt"] = hgtRule
-keyRuleMap["hcl"] = hclRule
-keyRuleMap["ecl"] = eclRule
-keyRuleMap["pid"] = pidRule
+var keyRuleMap = [
+  "byr": byrRule,
+  "iyr": iyrRule,
+  "eyr": eyrRule,
+  "hgt": hgtRule,
+  "hcl": hclRule,
+  "ecl": eclRule,
+  "pid": pidRule
+]
 
 func part2(_ cand: String) -> Bool {
 
