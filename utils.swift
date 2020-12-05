@@ -14,6 +14,36 @@ public func getLines(from filename: String) -> Array<String> {
     return getFile(filename).split(separator: "\n").map {String($0)}
 }
 
+
+// Function for generating k-combinations
+public func kcombinations<T>(_ arr: [T], k: Int) -> [[T]] {
+    return kcombinations(arr[...], k: k)
+}
+
+public func kcombinations<T>(_ arr: ArraySlice<T>, k: Int) -> [[T]] {
+    if (k > arr.count) || (arr.count == 0) {
+        return [[T]]()
+    }
+    
+    if k == 1 {
+        return arr.map {[$0]}
+    }
+
+    if k == arr.count {
+        return [Array(arr)]
+    }
+
+    let upperIdx: Int = (arr.count - 1)
+    let startIdx: Int = arr.startIndex
+
+    func foo(_ idx: Int) -> [[T]] {
+        return kcombinations(arr[(startIdx+idx+1)...], k: k - 1).map {[arr[startIdx+idx]] + $0}
+    }
+    return (0..<upperIdx).flatMap { idx in
+        return foo(idx)
+    }
+}
+
 // Function for extracting groups from regex pattern
 // https://stackoverflow.com/a/53652037
 extension String {
@@ -53,4 +83,17 @@ extension Int {
     }   
 }
 
+public func powInt(_ base: Int, _ power: Int) -> Int {
+    if power == 0 {
+        return 1
+    }
 
+    if (power % 2) == 0 {
+        let res = powInt(base, power / 2)
+        return res * res
+    }
+    else {
+        let res = powInt(base, power - 1)
+        return base * res
+    }
+}
