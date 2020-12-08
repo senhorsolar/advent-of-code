@@ -1,7 +1,7 @@
 import Foundation
 
 public func getFilename(day: Int, directory: String = "data") -> String {
-    let filename = String(format: "%@/day%d-input.txt", directory, day)
+    let filename = String(format: "%@/day%d.txt", directory, day)
     return filename
 }
 
