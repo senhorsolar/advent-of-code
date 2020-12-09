@@ -40,7 +40,7 @@ func part1(_ lines: [String]) -> Int {
     return accumulator
 }
 
-
+// Find acc of fixed instruction set
 func part2(_ lines: [String]) -> Int {
 
     var visitedInstructions = Set<Int>([])
