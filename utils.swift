@@ -97,3 +97,29 @@ public func powInt(_ base: Int, _ power: Int) -> Int {
         return base * res
     }
 }
+
+
+// https://gist.github.com/bdsaglam/b41294540756768f26dca70d058f8e1e
+public extension Array where Element: Comparable {
+    func argmax() -> Index? {
+        return indices.max(by: { self[$0] < self[$1] })
+    }
+    
+    func argmin() -> Index? {
+        return indices.min(by: { self[$0] < self[$1] })
+    }
+}
+
+public extension Array {
+    func argmax(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows-> Index? {
+        return try indices.max { (i, j) throws -> Bool in
+            try areInIncreasingOrder(self[i], self[j])
+        }
+    }
+    
+    func argmin(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows-> Index? {
+        return try indices.min { (i, j) throws -> Bool in
+            try areInIncreasingOrder(self[i], self[j])
+        }
+    }
+}
