@@ -44,6 +44,12 @@ public func kcombinations<T>(_ arr: ArraySlice<T>, k: Int) -> [[T]] {
     }
 }
 
+public extension Set where Element == String {
+    func contains(_ s: Substring) -> Bool {
+        return contains(String(s))
+    }
+}
+
 // Function for extracting groups from regex pattern
 // https://stackoverflow.com/a/53652037
 extension String {
@@ -80,7 +86,11 @@ extension Bool {
 extension Int {
     public init(_ bool: Bool) {
         self = bool ? 1 : 0
-    }   
+    }
+
+    public init(_ char: Character) {
+        self = Int(String(char))!
+    }
 }
 
 public func powInt(_ base: Int, _ power: Int) -> Int {

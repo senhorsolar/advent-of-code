@@ -1,5 +1,8 @@
 SC=swiftc
 SRC=src
+day?=1
+
+.PHONY: clean
 
 utils.swiftmodule: utils.swift
 	$(SC) -emit-module -emit-library $<
