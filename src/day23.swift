@@ -59,7 +59,7 @@ func play(_ input: [Int], nMoves: Int, nAfterOne: Int) -> [Int] {
         }
 
         // find dest
-        var dest = nodeMap[destVal]!        
+        let dest = nodeMap[destVal]!        
 
         // add three cups right after dest
         threeCups.last!.next = dest.next!
@@ -86,14 +86,7 @@ func part1(_ input: [Int]) -> String {
 }
 
 func part2(_ input: [Int]) -> UInt {
-    var fixedInput = input
-    var val = 10
-    while val <= 1000000 {
-        fixedInput.append(val)
-        val += 1
-    }
-
-    let res = play(fixedInput, nMoves: 10000000, nAfterOne: 2)
+    let res = play(input + (10...1000000), nMoves: 10000000, nAfterOne: 2)
     return UInt(res[0]) * UInt(res[1])
 }
 
