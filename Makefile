@@ -9,7 +9,7 @@ utils.swiftmodule: utils.swift
 
 day%: utils.swiftmodule
 	if [ ! -f $(SRC)/$@.swift ]; then cp $(SRC)/template.swift $(SRC)/$@.swift; fi;
-	$(SC) -I. -L. -lutils $(SRC)/$@.swift
+	$(SC) -O -I. -L. -lutils $(SRC)/$@.swift
 	./$@
 
 clean:
