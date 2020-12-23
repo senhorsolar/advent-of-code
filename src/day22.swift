@@ -5,6 +5,10 @@ func parseDeck(_ deck: String) -> [Int] {
     return deck.components(separatedBy: "\n")[1...].filter({$0.count > 0}).map({Int($0)!})
 }
 
+func calcScore(_ deck: [Int]) -> Int {
+        return deck.reversed().enumerated().map({idx, card in (idx+1)*card}).reduce(0,+)
+}
+
 func part1(_ deck1: [Int], _ deck2: [Int]) -> Int {
     var player1 = deck1
     var player2 = deck2
@@ -17,11 +21,7 @@ func part1(_ deck1: [Int], _ deck2: [Int]) -> Int {
         else {
             player2 += [b, a]
         }
-    }
-
-    func calcScore(_ deck: [Int]) -> Int {
-        return deck.reversed().enumerated().map({idx, card in (idx+1)*card}).reduce(0,+)
-    }
+    }    
     
     if player1.count > 0 {
         return calcScore(player1)
@@ -34,7 +34,6 @@ func part1(_ deck1: [Int], _ deck2: [Int]) -> Int {
 func part2(_ deck1: [Int], _ deck2: [Int]) -> Int {
 
     var winnersDeck = [Int]()
-    var memo = [[[Int]]: Int]()
     
     func subGame(_ deckA: [Int], _ deckB: [Int]) -> Int {
         
@@ -44,19 +43,18 @@ func part2(_ deck1: [Int], _ deck2: [Int]) -> Int {
         var prevRounds = Set<[[Int]]>()
 
         while player1.count > 0 && player2.count > 0 {
-            if prevRounds.contains([player1, player2]) {
+            let round = [player1, player2]
+            if prevRounds.contains(round) {
                 winnersDeck = player1
                 return 1
             }
             else {
-                prevRounds.insert([player1, player2])
+                prevRounds.insert(round)
                 
                 let (a, b) = (player1.remove(at: 0), player2.remove(at: 0))
                 if player1.count >= a && player2.count >= b {
-
-                    let round = [player1, player2]
-                    let subWinner = memo[round] ?? subGame(Array(player1[..<a]), Array(player2[..<b]))
-                    memo[round] = subWinner
+                    
+                    let subWinner = subGame(Array(player1[..<a]), Array(player2[..<b]))
                     
                     if subWinner == 1 {
                         player1 += [a, b]
@@ -85,9 +83,7 @@ func part2(_ deck1: [Int], _ deck2: [Int]) -> Int {
             return 2
         }
     }
-    func calcScore(_ deck: [Int]) -> Int {
-        return deck.reversed().enumerated().map({idx, card in (idx+1)*card}).reduce(0,+)
-    }
+    
     let _ = subGame(deck1, deck2)
     return calcScore(winnersDeck)
 }
