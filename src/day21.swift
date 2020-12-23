@@ -62,8 +62,6 @@ func part2(_ lines: [String]) -> [String] {
     func matchingFound(_ allergenMap: [Allergen: Set<Ingredient>]) -> Bool {
         return allergenMap.allSatisfy({$0.value.count < 1})
     }
-
-    print(allergenMap)
     
     var matches = [Allergen: Ingredient]()
     
@@ -73,15 +71,12 @@ func part2(_ lines: [String]) -> [String] {
             if ingredients.count == 1 {
                 removedIngredient = ingredients.first!
                 matches[allergen] = removedIngredient
-
-                
             }
         }
 
         allergenMap = Dictionary(uniqueKeysWithValues: allergenMap.map({($0.key, $0.value.subtracting([removedIngredient]))}))
     }
 
-    print(allergenMap)
     return matches.map({($0.key, $0.value)}).sorted(by: {$0.0 < $1.0}).map({$0.1})
 }
 
