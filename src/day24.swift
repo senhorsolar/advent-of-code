@@ -124,18 +124,18 @@ func part2(_ lines: [String]) -> Int {
     }
     
     func expandGrid(_ grid: inout Grid) {
-        for point in grid.keys {
+        for point in grid.filter({$0.value == .black}).keys {
             for direction in Direction.allCases {
                 let otherPoint = point + HexPoint(direction)
                 if grid[otherPoint] == nil {
                     grid[otherPoint] = .white
                 }
             }
-        }
+        }   
     }
 
-    func applyRules(_ grid: Grid) -> Grid {
-        var nextGrid = grid
+    func applyRules(_ grid: inout Grid) {
+        var changes = Grid()
 
         for (point, color) in grid {
 
@@ -150,22 +150,24 @@ func part2(_ lines: [String]) -> Int {
             switch color {
             case .black:
                 if nAdjacentBlacks == 0 || nAdjacentBlacks > 2 {
-                    nextGrid[point] = .white
+                    changes[point] = .white
                 }
             case .white:
                 if nAdjacentBlacks == 2 {
-                    nextGrid[point] = .black
+                    changes[point] = .black
                 }
             }
         }
-        return nextGrid
+
+        for (point, color) in changes {
+            grid[point] = color
+        }
     }
-
-
+    
     var grid = initGrid()
     for _ in (0..<100) {
         expandGrid(&grid)
-        grid = applyRules(grid)
+        applyRules(&grid)
     }
     
     return grid.reduce(0, {x, y in x + Int(y.value == .black)})
