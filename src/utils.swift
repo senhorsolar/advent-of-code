@@ -11,7 +11,7 @@ public func getFile(_ filename: String) -> String {
 
 // Loads lines from a given filename
 public func getLines(from filename: String) -> Array<String> {
-    return getFile(filename).split(separator: "\n").map {String($0)}
+    return getFile(filename).trim().split(separator: "\n").map {String($0)}
 }
 
 
@@ -72,6 +72,9 @@ extension String {
             print("invalid regex: \(error.localizedDescription)")
             return []
         }
+    }
+    public func trim() -> String {
+        return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 }
 
