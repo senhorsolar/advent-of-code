@@ -1,57 +1,37 @@
 import Foundation
 import utils
 
-func determineLoopSizes(_ publicKeys: Set<UInt>) -> [UInt: UInt] {
+func determineLoopSize(_ publicKey: UInt) -> UInt {
 
     let subject: UInt = 7
     var val: UInt = 1
 
-    var loopSizes = [UInt: UInt]()
-
-    var nToFind = publicKeys.count
-    var loopSize: UInt = 1
-    while nToFind > 0 {
-        val *= subject
-        val %= 20201227
-
-        if publicKeys.contains(val) {
-            loopSizes[val] = loopSize
-            nToFind -= 1
-        }
-
+    var loopSize: UInt = 0
+    while val != publicKey {
+        val = (val * subject) % 20201227
         loopSize += 1
     }
 
-    return loopSizes
+    return loopSize
 }
 
-func transformSubject(_ subject: UInt, loopSize: UInt) -> UInt {
-    
-    var val: UInt = 1
-    
-    for _ in (0..<loopSize) {
-        val *= subject
-        val %= 20201227
-    }
-    return val
-}
-
-func getPublicKeys(_ lines: [String]) -> Set<UInt> {
-    return Set<UInt>(lines.map({UInt($0)!}))
+func getPublicKeys(_ lines: [String]) -> [UInt] {
+    return lines.map({UInt($0)!})
 }
 
 func part1(_ lines: [String]) -> UInt {
     let publicKeys = getPublicKeys(lines)
-    let loopSizeMap = determineLoopSizes(publicKeys)
 
-    for (publicKeyA, _) in loopSizeMap {
-        for (publicKeyB, loopSizeB) in loopSizeMap {
-            if publicKeyA != publicKeyB {
-                return transformSubject(publicKeyA, loopSize: loopSizeB)
-            }
-        }
+    let publicKeyDoor = publicKeys[1]
+    let loopSizeCard = determineLoopSize(publicKeys[0])
+
+    var val: UInt = 1
+    
+    for _ in (0..<loopSizeCard) {
+        val = (val * publicKeyDoor) % 20201227
     }
-    return 0
+    
+    return val
 }
 
 func part2() -> String {
