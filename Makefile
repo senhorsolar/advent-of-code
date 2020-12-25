@@ -1,6 +1,7 @@
 SC=swiftc
 SRC=src
 day?=1
+FLAGS=-O 
 
 .PHONY: clean
 
@@ -9,7 +10,7 @@ utils.swiftmodule: $(SRC)/utils.swift
 
 day%: utils.swiftmodule
 	if [ ! -f $(SRC)/$@.swift ]; then cp $(SRC)/template.swift $(SRC)/$@.swift; fi;
-	$(SC) -O -I. -L. -lutils $(SRC)/$@.swift
+	$(SC) $(FLAGS) -I. -L. -lutils $(SRC)/$@.swift
 	./$@
 
 clean:
