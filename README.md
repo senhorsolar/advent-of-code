@@ -1,7 +1,6 @@
-# AoC2020
-Advent of Code 2020 solutions in swift.
+## Advent of code solutions
 
-## Running Solutions
-Run
-```make day%d```
-where %d is the day
+| Year  | Language |
+| :---: |  :---:   |
+| 2020  | Swift    |
+| 2021  | Scheme (Guile) |
