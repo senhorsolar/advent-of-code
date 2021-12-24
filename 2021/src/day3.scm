@@ -1,4 +1,5 @@
 (load "utils.scm")
+(use-modules (srfi srfi-1))
 
 (define binary-nums
   (let ((lines (get-lines (get-filename 3))))
@@ -93,4 +94,5 @@
       ((oxy-rating (bin->dec (filter-bits find-most-common binary-nums 0)))
        (co2-rating (bin->dec (filter-bits find-least-common binary-nums 0))))
     (* oxy-rating co2-rating)))
-       
+
+(display-ln part1 part2)

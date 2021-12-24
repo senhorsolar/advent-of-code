@@ -1,5 +1,6 @@
 ;; Load modules
 (load "utils.scm")
+(use-modules (srfi srfi-1))
 
 (define filename (get-filename 2))
 
@@ -79,3 +80,5 @@
 		      (cons "aim" 0))))
     (fold move pos commands)
     (* (get-depth pos) (get-horiz pos))))
+
+(display-ln part1 part2)

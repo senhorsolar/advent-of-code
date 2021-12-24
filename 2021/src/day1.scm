@@ -22,3 +22,5 @@
 	   (zip lines (cdr lines) (cddr lines))))
 	 (pairs (zip three-windows (cdr three-windows))))
     (length (filter increase? pairs))))
+
+(display-ln part1 part2)
