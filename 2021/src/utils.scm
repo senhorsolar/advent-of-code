@@ -51,4 +51,5 @@
 		  (check (cdr ls)))))))
     (check ls)))
 	      
-	   
+(define (char->number char)
+  (string->number (string char)))
